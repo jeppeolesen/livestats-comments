@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import theme from 'styles/theme'
+import Logo from 'components/generic/Logo'
 
 const Wrapper = styled.nav`
   width: 100%;
@@ -14,17 +16,26 @@ const Wrapper = styled.nav`
 
 const Item = styled.div`
   flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `
 
-const Logo = styled(Item)`
-  background: #3ba8ce;
+const LogoContainer = styled(Item)`
+  background: ${theme.colors.blue};
+
+  svg {
+    transform: scale(0.3)
+  }
 `
 
 export default class Navigation extends Component {
   render() {
     return (
       <Wrapper>
-        <Logo />
+        <LogoContainer>
+          <Logo />
+        </LogoContainer>
       </Wrapper>
     )
   }
