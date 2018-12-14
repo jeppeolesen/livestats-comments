@@ -175,6 +175,8 @@ export default class Preview extends Component {
           awaySavePercentage={this.getSavePercentage('away')}
           homeFaceoffPercentage={homeFaceoffPercentage}
           awayFaceoffPercentage={awayFaceoffPercentage}
+          homeSaves={this.getSaves('home')}
+          awaySaves={this.getSaves('away')}
         />
       </Wrapper>
     )

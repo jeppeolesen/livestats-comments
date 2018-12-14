@@ -17,7 +17,9 @@ export default class Output extends Component {
       homeSavePercentage,
       awaySavePercentage,
       homeFaceoffPercentage,
-      awayFaceoffPercentage
+      awayFaceoffPercentage,
+      homeSaves,
+      awaySaves
     } = this.props
 
     return(
@@ -63,13 +65,13 @@ export default class Output extends Component {
             
             <div style="display:flex;width:100%;padding:1em 0;font-weight:normal;text-align:center;">
               <div style="flex:1;text-align:center;padding:0 1em;">
-                ${away.shots}
+                ${homeSaves}
               </div>
               <div style="flex:1;text-align:center;padding:0 1em;">
                 Redninger
               </div>
               <div style="flex:1;text-align:center;padding:0 1em;">
-                ${home.shots}
+                ${awaySaves}
               </div>
             </div>
 
