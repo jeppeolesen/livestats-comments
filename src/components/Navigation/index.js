@@ -12,6 +12,7 @@ const Wrapper = styled.nav`
   height: 75px;
   background: white;
   border-bottom: 1px solid #ccc;
+  z-index: 999;
 `
 
 const Item = styled.div`
