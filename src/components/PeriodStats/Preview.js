@@ -68,6 +68,12 @@ export default class Preview extends Component {
     return savePercentage
   }
 
+  getSaves(team) {
+    const data = team === 'home' ? this.props.away : this.props.home
+
+    return data.shots - data.goals
+  }
+
   getFaceoffPercentage() {
     const { home, away } = this.props
 
@@ -120,9 +126,9 @@ export default class Preview extends Component {
             <Item>{away.shots}</Item>
           </Row>
           <Row>
-            <Item>{away.shots}</Item>
+            <Item>{this.getSaves('home')}</Item>
             <Item>Redninger</Item>
-            <Item>{home.shots}</Item>
+            <Item>{this.getSaves('away')}</Item>
           </Row>
           <Row>
             <Item>{this.getSavePercentage('home')}</Item>
