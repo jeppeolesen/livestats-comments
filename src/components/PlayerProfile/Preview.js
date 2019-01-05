@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
 
@@ -128,7 +127,6 @@ export default class Preview extends Component {
       image,
       source,
       gp,
-      p,
       g,
       a,
       gwg,
@@ -139,12 +137,10 @@ export default class Preview extends Component {
       foLost,
       pen,
       min,
-      gdi,
       gpi,
       mip,
       sv,
       ga,
-      gaa
     } = this.props
     
     return(
