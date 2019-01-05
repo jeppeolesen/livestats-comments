@@ -201,7 +201,7 @@ export default class PeriodStats extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col col={10}>
+                  <Col col={8}>
                     <Input
                       type="text"
                       value={home.player}
@@ -215,7 +215,7 @@ export default class PeriodStats extends Component {
                       }
                     />
                   </Col>
-                  <Col col={2}>
+                  <Col col={4}>
                     <Input
                       type="number"
                       value={home.playerShots}
@@ -325,7 +325,7 @@ export default class PeriodStats extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col col={10}>
+                  <Col col={8}>
                     <Input
                       type="text"
                       value={away.player}
@@ -339,7 +339,7 @@ export default class PeriodStats extends Component {
                       }
                     />
                   </Col>
-                  <Col col={2}>
+                  <Col col={4}>
                     <Input
                       type="number"
                       value={away.playerShots}
