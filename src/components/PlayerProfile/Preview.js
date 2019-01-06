@@ -190,7 +190,7 @@ export default class Preview extends Component {
                     <Item>{this.getPlusMinus()}</Item>
                     <Item>{s}</Item>
                     <Item>{this.getShotsPerGame()}</Item>
-                    <Item>{this.getScoringPercetage()}%</Item>
+                    <Item>{this.getSavePercetage()}%</Item>
                     <Item>{foWon}</Item>
                     <Item>{foLost}</Item>
                     <Item>{this.getFaceoffPercentage()}%</Item>
