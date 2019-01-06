@@ -40,7 +40,8 @@ export default class Output extends Component {
       sv,
       ga,
       gaa,
-      svpg
+      svpg,
+      svPct
     } = this.props
 
     return(
@@ -119,7 +120,7 @@ export default class Output extends Component {
                 <div style="padding: 1em;">${mip}</div>
                 <div style="padding: 1em; background: #f5f5f5;">${sv}</div>
                 <div style="padding: 1em;">${ga}</div>
-                <div style="padding: 1em; background: #f5f5f5;">${sPct}%</div>
+                <div style="padding: 1em; background: #f5f5f5;">${svPct}%</div>
                 <div style="padding: 1em;">${svpg}</div>
                 <div style="padding: 1em; background: #f5f5f5;">${gaa}</div>
               </div>

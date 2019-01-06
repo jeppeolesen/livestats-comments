@@ -241,6 +241,7 @@ export default class Preview extends Component {
           avgMin={this.getAveragePenaltyMinutes()}
           svpg={this.getSavesPerGame()}
           gaa={this.getGoalsAgainstAverage()}
+          svPct={this.getSavePercetage()}
         />
       </Wrapper>
     )
