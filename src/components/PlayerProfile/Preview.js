@@ -118,8 +118,6 @@ export default class Preview extends Component {
   }
   
   render(){
-    console.log(this.props)
-
     const {
       type,
       number,
@@ -190,7 +188,7 @@ export default class Preview extends Component {
                     <Item>{this.getPlusMinus()}</Item>
                     <Item>{s}</Item>
                     <Item>{this.getShotsPerGame()}</Item>
-                    <Item>{this.getSavePercetage()}%</Item>
+                    <Item>{this.getScoringPercetage()}%</Item>
                     <Item>{foWon}</Item>
                     <Item>{foLost}</Item>
                     <Item>{this.getFaceoffPercentage()}%</Item>
