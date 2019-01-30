@@ -8,13 +8,9 @@ export default`
   ${fonts}
 
   html, body {
-    font-family: 'Open Sans', serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    font-weight: 300;
-  }
-
-  h1, h2, h3, h4 {
-    font-weight: 300;
+    font-weight: 400;
   }
 
   h1 {
