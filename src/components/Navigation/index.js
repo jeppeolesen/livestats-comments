@@ -135,7 +135,7 @@ const Title = styled.h1`
 
 export default class Navigation extends Component {
   state = {
-    navActive: true
+    navActive: false
   }
 
   render() {
