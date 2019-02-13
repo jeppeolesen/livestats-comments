@@ -42,7 +42,7 @@ const Image = styled.img`
 export default class Preview extends Component {
   getPointsAverage() {
     const {g, a, gp} = this.props
-    const result = ((g + a) / gp).toFixed(2)
+    const result = ((parseInt(g) + parseInt(a)) / gp).toFixed(2)
 
     return result > 0 ? result : 0
   }
@@ -85,7 +85,7 @@ export default class Preview extends Component {
   getTotalPoints() {
     const {g, a} = this.props
     
-    return g + a
+    return parseInt(g) + parseInt(a)
   }
 
   getShotsPerGame() {
@@ -120,6 +120,11 @@ export default class Preview extends Component {
   render(){
     const {
       type,
+      title,
+      dob,
+      shoots,
+      height,
+      weight,
       number,
       name,
       image,
@@ -143,7 +148,7 @@ export default class Preview extends Component {
     
     return(
       <Wrapper>
-        <Heading>Spillerprofil: #{number} {name}</Heading>
+        <Heading>{title}: #{number} {name}</Heading>
         
         <Container>
           <Row>
@@ -156,6 +161,10 @@ export default class Preview extends Component {
               <div>
                 <Table>
                   <TableCol>
+                    <Item>Fødselsdato</Item>
+                    <Item>Fatning</Item>
+                    <Item>Højde</Item>
+                    <Item>Vægt</Item>
                     <Item>Kampe</Item>
                     <Item>Mål</Item>
                     <Item>Assists</Item>
@@ -177,6 +186,10 @@ export default class Preview extends Component {
                     <Item>Udvisningsminutter per kamp</Item>
                   </TableCol>
                   <TableCol>
+                    <Item>{dob}</Item>
+                    <Item>{shoots}</Item>
+                    <Item>{height} cm</Item>
+                    <Item>{weight} kg</Item>
                     <Item>{gp}</Item>
                     <Item>{g}</Item>
                     <Item>{a}</Item>
@@ -203,6 +216,10 @@ export default class Preview extends Component {
               <div>
                 <Table>
                   <TableCol>
+                    <Item>Fødselsdato</Item>
+                    <Item>Fatning</Item>
+                    <Item>Højde</Item>
+                    <Item>Vægt</Item>
                     <Item>Kampe spillet</Item>
                     <Item>Minutter spillet</Item>
                     <Item>Redninger</Item>
@@ -212,6 +229,10 @@ export default class Preview extends Component {
                     <Item>Mål imod per kamp</Item>
                   </TableCol>
                   <TableCol>
+                    <Item>{dob}</Item>
+                    <Item>{shoots}</Item>
+                    <Item>{height} cm</Item>
+                    <Item>{weight} kg</Item>
                     <Item>{gpi}</Item>
                     <Item>{mip}</Item>
                     <Item>{sv}</Item>

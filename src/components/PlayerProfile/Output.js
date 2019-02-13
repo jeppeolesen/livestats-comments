@@ -46,6 +46,11 @@ export default class Output extends Component {
   render() {
     const {
       type,
+      title,
+      dob,
+      shoots,
+      height,
+      weight,
       number,
       name,
       image,
@@ -87,13 +92,17 @@ export default class Output extends Component {
         <TextArea ref={this.outputRef} value={
           type === 'player' ? `
             <div style="width:100%">
-              <h2 style="text-align:center;">Spillerprofil: #${number} ${name}</h2>
+              <h2 style="text-align:center;">${title}: #${number} ${name}</h2>
               <div style="text-align: center">
                 <img src=${image}" style="max-width: 100%; display: block; margin: 0 auto;" />
                 <p style="font-size: 11px; font-style: italic">Kilde: ${source}</p>
               </div>
               <div style="display: flex;">
                 <div style="flex: 1;">
+                  <div style="padding: 1em; background: #f5f5f5;">Fødselsdato</div>
+                  <div style="padding: 1em;">Fatning</div>
+                  <div style="padding: 1em; background: #f5f5f5;">Højde</div>
+                  <div style="padding: 1em;">Vægt</div>
                   <div style="padding: 1em; background: #f5f5f5;">Kampe</div>
                   <div style="padding: 1em;">Mål</div>
                   <div style="padding: 1em; background: #f5f5f5;">Assists</div>
@@ -115,6 +124,10 @@ export default class Output extends Component {
                   <div style="padding: 1em; background: #f5f5f5;">Udvisningsminutter per kamp</div>
                 </div>
                 <div style="flex: 1; text-align: center;">
+                  <div style="padding: 1em; background: #f5f5f5;">${dob}</div>
+                  <div style="padding: 1em;">${shoots}</div>
+                  <div style="padding: 1em; background: #f5f5f5;">${height}</div>
+                  <div style="padding: 1em;">${weight}</div>
                   <div style="padding: 1em; background: #f5f5f5;">${gp}</div>
                   <div style="padding: 1em;">${g}</div>
                   <div style="padding: 1em; background: #f5f5f5;">${a}</div>
@@ -146,6 +159,10 @@ export default class Output extends Component {
               </div>
               <div style="display: flex;">
                 <div style="flex: 1;">
+                  <div style="padding: 1em; background: #f5f5f5;">Fødselsdato</div>
+                  <div style="padding: 1em;">Fatning</div>
+                  <div style="padding: 1em; background: #f5f5f5;">Højde</div>
+                  <div style="padding: 1em;">Vægt</div>
                   <div style="padding: 1em; background: #f5f5f5;">Kampe spillet</div>
                   <div style="padding: 1em;">Minutter spillet</div>
                   <div style="padding: 1em; background: #f5f5f5;">Redninger</div>
@@ -155,6 +172,10 @@ export default class Output extends Component {
                   <div style="padding: 1em; background: #f5f5f5;">Mål imod per kamp</div>
                 </div>
                 <div style="flex: 1; text-align: center;">
+                  <div style="padding: 1em; background: #f5f5f5;">${dob}</div>
+                  <div style="padding: 1em;">${shoots}</div>
+                  <div style="padding: 1em; background: #f5f5f5;">${height}</div>
+                  <div style="padding: 1em;">${weight}</div>
                   <div style="padding: 1em; background: #f5f5f5;">${gpi}</div>
                   <div style="padding: 1em;">${mip}</div>
                   <div style="padding: 1em; background: #f5f5f5;">${sv}</div>

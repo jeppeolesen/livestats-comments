@@ -18,3 +18,10 @@ export const getTeams = () => {
       return response.text()
     })
 }
+
+export const getPlayers = teamID => {
+  return fetch(`https://cors-anywhere.herokuapp.com/http://hockeyligaen.dk/interface/xmlTeamRoster.aspx?teamid=${teamID}`)
+    .then(response => {
+      return response.text()
+    })
+}

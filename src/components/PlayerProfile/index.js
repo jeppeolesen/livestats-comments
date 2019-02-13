@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
+import { getTeams, getPlayers } from 'api/api'
+import { toJs } from 'utils/xml'
 
 import Preview from './Preview'
 
@@ -35,11 +37,32 @@ const RadioContainer = styled.div`
   }
 `
 
+const SelectorContainer = styled.div`
+  display: flex;
+
+  button {
+    flex-shrink: 0;
+    margin-left: 1em;
+    margin-top: 1em;
+  }
+`
+
+const Selector = styled.select`
+  width: 100%;
+  margin-top: 1em;
+  height: 2em;
+`
+
 export default class PlayerProfile extends Component {
   state = {
     type: 'player',
+    title: 'Spillerprofil',
     number: 99,
     name: 'Wayne Gretzky',
+    dob: '01-01-1960',
+    height: 0,
+    weight: 0,
+    shoots: 'L',
     image: 'https://i.imgur.com/5hSLVz3.jpg',
     source: '',
     gp: 0,
@@ -58,13 +81,70 @@ export default class PlayerProfile extends Component {
     mip: 0,
     sv: 0,
     ga: 0,
+    selectedTeam: 10030,
+    selectedPlayer: 0
+  }
+
+  componentDidMount() {
+    return getTeams().then(response => {
+      const raw = toJs(response)
+      const data = toJs(raw.NewDataSet.Table[Object.keys(raw.NewDataSet.Table)]._text)
+
+      this.setState({teams: data.Hold})
+    })
+  }
+
+  getPlayers() {
+    const { selectedTeam } = this.state
+
+    return getPlayers(selectedTeam).then(response => {
+      const raw = toJs(response)
+      const reduced = raw.NewDataSet.Table
+      let xml = ''
+
+      reduced.map(entry => {
+        return xml += entry[Object.keys(entry)]['_text']
+      })
+
+      const parsedList = toJs(xml)
+
+      this.setState({players: parsedList.Hold.Person})
+    })
+  }
+
+  getStats() {
+    const {
+      selectedPlayer,
+      players
+    } = this.state
+    
+    const stats = players.find(player => player._attributes.PersonID === selectedPlayer)
+
+    return this.setState({
+      name: stats._attributes.Name,
+      number: stats.Spiller._attributes.JerseyNo,
+      dob: stats._attributes.BornOn,
+      height: stats._attributes.Height,
+      weight: stats._attributes.Weight,
+      shoots: stats._attributes.Shoots,
+      gp: stats.Spiller._attributes.Games,
+      g: stats.Spiller._attributes.Goals,
+      a: stats.Spiller._attributes.Assists,
+      pen: stats.Spiller._attributes.Penalties,
+      min: stats.Spiller._attributes.PenaltyMinutes,
+    })
   }
   
   render() {
     const {
       type,
+      title,
       number,
       name,
+      dob,
+      shoots,
+      height,
+      weight,
       image,
       source,
       gp,
@@ -82,6 +162,8 @@ export default class PlayerProfile extends Component {
       mip,
       sv,
       ga,
+      teams,
+      players
     } = this.state
 
     return(
@@ -115,8 +197,65 @@ export default class PlayerProfile extends Component {
                   </Col>
                 </Row>
 
+                <Separator />
+                
                 <Row>
-                  <Col col={2}>
+                  <Col>
+                    <Label>Vælg hold</Label>
+                    <SelectorContainer>
+                      <Selector onChange={e => this.setState({selectedTeam: e.target.value})}>
+                        <option value={null} key={0}>---</option>
+                        {teams && teams.map(team => {
+                          return(
+                            <option
+                              value={team._attributes.TeamID}
+                              key={team._attributes.TeamID}>
+                              {team._attributes.TeamName}
+                            </option>
+                          )
+                        })} 
+                      </Selector>
+                      <button onClick={e => this.getPlayers()}>Hent spillere</button>
+                    </SelectorContainer>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Label>Vælg spiller</Label>
+                      <SelectorContainer>
+                        <Selector onChange={e => this.setState({selectedPlayer: e.target.value})}>
+                          <option value={null} key={0}>---</option>
+                          {players && players.map(player => {
+                            return(
+                              <option
+                                value={player._attributes.PersonID}
+                                key={player._attributes.PersonID}>
+                                {player._attributes.Name}
+                              </option>
+                            )
+                          })} 
+                        </Selector>
+                        <button onClick={e => this.getStats()}>Hent stats</button>
+                      </SelectorContainer>
+                  </Col>
+                </Row>
+
+                <Separator />
+
+                <Row>
+                  <Col>
+                    <Label>Overskrift</Label>
+                    <Input
+                      type="text"
+                      value={title}
+                      onChange={e => this.setState({title: e.target.value})}
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col col={3}>
                     <Label>Nummer</Label>
                     <Input
                       type="text"
@@ -124,12 +263,47 @@ export default class PlayerProfile extends Component {
                       onChange={e => this.setState({number: e.target.value})}
                     />
                   </Col>
-                  <Col col={10}>
+                  <Col col={9}>
                     <Label>Navn</Label>
                     <Input
                       type="text"
                       value={name}
                       onChange={e => this.setState({name: e.target.value})}
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col col={3}>
+                    <Label>Fødseldato</Label>
+                    <Input
+                      type="text"
+                      value={dob}
+                      onChange={e => this.setState({dob: e.target.value})}
+                    />
+                  </Col>
+                  <Col col={3}>
+                    <Label>Fatning</Label>
+                    <Input
+                      type="text"
+                      value={shoots}
+                      onChange={e => this.setState({shoots: e.target.value})}
+                    />
+                  </Col>
+                  <Col col={3}>
+                    <Label>Højde</Label>
+                    <Input
+                      type="text"
+                      value={height}
+                      onChange={e => this.setState({height: e.target.value})}
+                    />
+                  </Col>
+                  <Col col={3}>
+                    <Label>Vægt</Label>
+                    <Input
+                      type="text"
+                      value={weight}
+                      onChange={e => this.setState({weight: e.target.value})}
                     />
                   </Col>
                 </Row>
