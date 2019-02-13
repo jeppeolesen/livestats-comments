@@ -82,7 +82,7 @@ export default class PeriodStats extends Component {
       let finalList = []
 
       parsedList.xmlGameListAll.map(game => {
-        finalList.push({
+        return finalList.push({
           ID: game._attributes.GameID,
           date: game._attributes.GameDate,
           home: game._attributes.Hometeam,
@@ -106,7 +106,7 @@ export default class PeriodStats extends Component {
       const games = this.state.games
       const gameInfo = games.find(game => game.ID === this.state.selectedGame)
 
-      this.setState({
+      return this.setState({
         home: {
           ...home,
           name: gameInfo.home,
