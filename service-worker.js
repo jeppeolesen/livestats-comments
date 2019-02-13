@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/livestats-comments/precache-manifest.5295fc4e0b7adfae7486e57df0c92127.js"
+  "/livestats-comments/precache-manifest.305fcc9c3cdf9c454acdb919214f5041.js"
 );
 
 workbox.clientsClaim();
