@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
-import { getGamesList, getGameStats } from 'api/games'
+import { getGamesList, getGameStats } from 'api/api'
 import { toJs } from 'utils/xml'
 
 import Preview from './Preview'
@@ -75,7 +75,7 @@ export default class PeriodStats extends Component {
       let xml = ''
 
       reduced.map(entry => {
-        xml += entry[Object.keys(entry)]['_text']
+        return xml += entry[Object.keys(entry)]['_text']
       })
 
       const parsedList = toJs(xml)
