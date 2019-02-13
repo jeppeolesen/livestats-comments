@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
+import { getGamesList, getGameStats } from 'api/games'
+import { toJs } from 'utils/xml'
 
 import Preview from './Preview'
 
@@ -19,6 +21,22 @@ const Separator = styled.div`
   height: 1px;
   background: #ccc;
   margin: 2em 0 1em;
+`
+
+const SelectorContainer = styled.div`
+  display: flex;
+
+  button {
+    flex-shrink: 0;
+    margin-left: 1em;
+    margin-top: 1em;
+  }
+`
+
+const DateSelector = styled.select`
+  width: 100%;
+  margin-top: 1em;
+  height: 2em;
 `
 
 export default class PeriodStats extends Component {
@@ -45,7 +63,69 @@ export default class PeriodStats extends Component {
       pim: 0,
       player: '#99 Wayne Gretzky',
       playerShots: 0
-    }
+    },
+    games: [],
+    selectedGame: 0
+  }
+
+  componentDidMount() {
+    getGamesList().then(data => {
+      const raw = toJs(data)
+      const reduced = raw.NewDataSet.Table
+      let xml = ''
+
+      reduced.map(entry => {
+        xml += entry[Object.keys(entry)]['_text']
+      })
+
+      const parsedList = toJs(xml)
+      let finalList = []
+
+      parsedList.xmlGameListAll.map(game => {
+        finalList.push({
+          ID: game._attributes.GameID,
+          date: game._attributes.GameDate,
+          home: game._attributes.Hometeam,
+          away: game._attributes.Awayteam
+        })
+      })
+
+      return this.setState({
+        games: finalList
+      })
+    })
+  }
+
+  getGameStats() {
+    getGameStats(this.state.selectedGame).then(response => {
+      const data = toJs(response)
+      const homeData = data.InGameStatisticsPerPeriod.periodStats.GameTotal.Team[0]
+      const awayData = data.InGameStatisticsPerPeriod.periodStats.GameTotal.Team[1]
+      const home = this.state.home
+      const away = this.state.away
+      const games = this.state.games
+      const gameInfo = games.find(game => game.ID === this.state.selectedGame)
+
+      this.setState({
+        home: {
+          ...home,
+          name: gameInfo.home,
+          goals: parseInt(homeData.Goals._text),
+          shots: parseInt(homeData.Shots._text),
+          faceoffs: parseInt(homeData.FaceOffsWon._text),
+          pim: parseInt(homeData.PenaltyMinutes._text),
+        },
+        away: {
+          ...away,
+          name: gameInfo.away,
+          goals: parseInt(awayData.Goals._text),
+          shots: parseInt(awayData.Shots._text),
+          faceoffs: parseInt(awayData.FaceOffsWon._text),
+          pim: parseInt(awayData.PenaltyMinutes._text),
+        }
+      })
+
+    });
   }
   
   render() {
@@ -61,6 +141,27 @@ export default class PeriodStats extends Component {
         
           {/* Stats entry */}
           <Col col={6}>
+            <Row>
+              <Col>
+                <Label>Vælg kamp</Label>
+                <SelectorContainer>
+                  <DateSelector onChange={e => this.setState({selectedGame: e.target.value})}>
+                    <option value={0} key={0}>---</option>
+                    {this.state.games.map(game => {
+                      return(
+                        <option value={game.ID} key={game.ID}>
+                          {new Date(game.date).toLocaleDateString()}, {game.home} - {game.away}
+                        </option>
+                      )
+                    })}
+                  </DateSelector>
+                  <button onClick={e => this.getGameStats()}>Hent stats</button>
+                </SelectorContainer>
+              </Col>
+            </Row>
+
+            <Separator />
+
             <Row>
               <Col>
                 <Row>

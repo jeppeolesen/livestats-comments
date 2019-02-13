@@ -15,7 +15,8 @@
     "react-scripts": "2.1.1",
     "styled-bootstrap-grid": "^2.0.1",
     "styled-components": "^4.1.2",
-    "styled-normalize": "^8.0.4"
+    "styled-normalize": "^8.0.4",
+    "xml-js": "^1.6.9"
   },
   "scripts": {
     "start": "REACT_APP_VERSION=$npm_package_version react-scripts start",
