@@ -11,3 +11,10 @@ export const getGameStats = ID => {
       return response.text()
     })
 }
+
+export const getTeams = () => {
+  return fetch('https://cors-anywhere.herokuapp.com/http://hockeyligaen.dk/interface/xmlTeamList.aspx?tournamentID=1476')
+    .then(response => {
+      return response.text()
+    })
+}
