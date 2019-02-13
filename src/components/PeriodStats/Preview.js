@@ -156,6 +156,11 @@ export default class Preview extends Component {
             <Item>{away.offsides}</Item>
           </Row>
           <Row>
+            <Item>{home.pen}</Item>
+            <Item>Udvisninger</Item>
+            <Item>{away.pen}</Item>
+          </Row>
+          <Row>
             <Item>{home.pim}</Item>
             <Item>Udvisningsminutter</Item>
             <Item>{away.pim}</Item>

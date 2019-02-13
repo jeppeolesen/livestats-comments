@@ -49,6 +49,7 @@ export default class PeriodStats extends Component {
       faceoffs: 0,
       icings: 0,
       offsides: 0,
+      pen: 0,
       pim: 0,
       player: '#99 Wayne Gretzky',
       playerShots: 0
@@ -60,6 +61,7 @@ export default class PeriodStats extends Component {
       faceoffs: 0,
       icings: 0,
       offsides: 0,
+      pen: 0,
       pim: 0,
       player: '#99 Wayne Gretzky',
       playerShots: 0
@@ -113,6 +115,7 @@ export default class PeriodStats extends Component {
           goals: parseInt(homeData.Goals._text),
           shots: parseInt(homeData.Shots._text),
           faceoffs: parseInt(homeData.FaceOffsWon._text),
+          pen: parseInt(homeData.Penalties._text),
           pim: parseInt(homeData.PenaltyMinutes._text),
         },
         away: {
@@ -121,6 +124,7 @@ export default class PeriodStats extends Component {
           goals: parseInt(awayData.Goals._text),
           shots: parseInt(awayData.Shots._text),
           faceoffs: parseInt(awayData.FaceOffsWon._text),
+          pen: parseInt(awayData.Penalties._text),
           pim: parseInt(awayData.PenaltyMinutes._text),
         }
       })
@@ -282,6 +286,20 @@ export default class PeriodStats extends Component {
                   }
                 />
 
+                <Label>Udvisninger</Label>
+                <Input
+                  type="number"
+                  value={home.pen}
+                  onChange={
+                    e => this.setState({
+                      home: {
+                        ...home,
+                        pen: e.target.value
+                      }
+                    })
+                  }
+                />
+
                 <Label>Udvisningsminutter</Label>
                 <Input
                   type="number"
@@ -401,6 +419,20 @@ export default class PeriodStats extends Component {
                       away: {
                         ...away,
                         offsides: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <Label>Udvisninger</Label>
+                <Input
+                  type="number"
+                  value={away.pen}
+                  onChange={
+                    e => this.setState({
+                      away: {
+                        ...away,
+                        pen: e.target.value
                       }
                     })
                   }

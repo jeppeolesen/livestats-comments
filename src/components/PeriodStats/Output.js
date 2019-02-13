@@ -177,6 +177,18 @@ export default class Output extends Component {
 
               <div style="display:flex;width:100%;padding:1em 0;font-weight:normal;text-align:center;">
                 <div style="flex:1;text-align:center;padding:0 1em;">
+                  ${home.pen}
+                </div>
+                <div style="flex:1;text-align:center;padding:0 1em;">
+                  Udvisninger
+                </div>
+                <div style="flex:1;text-align:center;padding:0 1em;">
+                  ${away.pen}
+                </div>
+              </div>
+
+              <div style="display:flex;width:100%;padding:1em 0;font-weight:normal;text-align:center;">
+                <div style="flex:1;text-align:center;padding:0 1em;">
                   ${home.pim}
                 </div>
                 <div style="flex:1;text-align:center;padding:0 1em;">
