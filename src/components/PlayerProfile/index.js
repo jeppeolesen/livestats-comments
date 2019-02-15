@@ -82,7 +82,9 @@ export default class PlayerProfile extends Component {
     sv: 0,
     ga: 0,
     selectedTeam: 10030,
-    selectedPlayer: 0
+    selectedPlayer: 0,
+    loadingTeams: true,
+    loadingPlayers: false,
   }
 
   componentDidMount() {
@@ -91,11 +93,14 @@ export default class PlayerProfile extends Component {
       const data = toJs(raw.NewDataSet.Table[Object.keys(raw.NewDataSet.Table)]._text)
 
       this.setState({teams: data.Hold})
+      this.setState({loadingTeams: false})
     })
   }
 
   getPlayers() {
     const { selectedTeam } = this.state
+
+    this.setState({ loadingPlayers: true })
 
     return getPlayers(selectedTeam).then(response => {
       const raw = toJs(response)
@@ -108,7 +113,8 @@ export default class PlayerProfile extends Component {
 
       const parsedList = toJs(xml)
 
-      this.setState({players: parsedList.Hold.Person})
+      this.setState({ players: parsedList.Hold.Person })
+      this.setState({ loadingPlayers: false })
     })
   }
 
@@ -163,7 +169,9 @@ export default class PlayerProfile extends Component {
       sv,
       ga,
       teams,
-      players
+      players,
+      loadingTeams,
+      loadingPlayers
     } = this.state
 
     return(
@@ -201,43 +209,56 @@ export default class PlayerProfile extends Component {
                 
                 <Row>
                   <Col>
-                    <Label>Vælg hold</Label>
-                    <SelectorContainer>
-                      <Selector onChange={e => this.setState({selectedTeam: e.target.value})}>
-                        <option value={null} key={0}>---</option>
-                        {teams && teams.map(team => {
-                          return(
-                            <option
-                              value={team._attributes.TeamID}
-                              key={team._attributes.TeamID}>
-                              {team._attributes.TeamName}
-                            </option>
-                          )
-                        })} 
-                      </Selector>
-                      <button onClick={e => this.getPlayers()}>Hent spillere</button>
-                    </SelectorContainer>
+                    {loadingTeams ? (
+                      <Label>Henter hold...</Label>
+                    ) : (
+                      <div>
+                        <Label>Vælg hold</Label>
+                        <SelectorContainer>
+                          <Selector onChange={e => this.setState({selectedTeam: e.target.value})}>
+                            <option value={null} key={0}>---</option>
+                            {teams && teams.map(team => {
+                              return(
+                                <option
+                                  value={team._attributes.TeamID}
+                                  key={team._attributes.TeamID}>
+                                  {team._attributes.TeamName}
+                                </option>
+                              )
+                            })} 
+                          </Selector>
+                          <button onClick={e => this.getPlayers()}>Hent spillere</button>
+                        </SelectorContainer>
+                      </div>
+                    )}
                   </Col>
                 </Row>
 
                 <Row>
                   <Col>
-                    <Label>Vælg spiller</Label>
-                      <SelectorContainer>
-                        <Selector onChange={e => this.setState({selectedPlayer: e.target.value})}>
-                          <option value={null} key={0}>---</option>
-                          {players && players.map(player => {
-                            return(
-                              <option
-                                value={player._attributes.PersonID}
-                                key={player._attributes.PersonID}>
-                                {player._attributes.Name}
-                              </option>
-                            )
-                          })} 
-                        </Selector>
-                        <button onClick={e => this.getStats()}>Hent stats</button>
-                      </SelectorContainer>
+                    {loadingPlayers ? (
+                      <Label>Henter spillere...</Label>
+                    ) : (
+                      players &&
+                        <div>
+                          <Label>Vælg spiller</Label>
+                          <SelectorContainer>
+                            <Selector onChange={e => this.setState({selectedPlayer: e.target.value})}>
+                              <option value={null} key={0}>---</option>
+                              {players && players.map(player => {
+                                return(
+                                  <option
+                                    value={player._attributes.PersonID}
+                                    key={player._attributes.PersonID}>
+                                    {player._attributes.Name}
+                                  </option>
+                                )
+                              })} 
+                            </Selector>
+                            <button onClick={e => this.getStats()}>Hent stats</button>
+                          </SelectorContainer>
+                        </div>
+                    )}
                   </Col>
                 </Row>
 
