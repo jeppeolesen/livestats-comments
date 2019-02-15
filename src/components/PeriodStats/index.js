@@ -67,7 +67,9 @@ export default class PeriodStats extends Component {
       playerShots: 0
     },
     games: [],
-    selectedGame: 0
+    selectedGame: 0,
+    loadingGames: true,
+    loadingStats: false
   }
 
   componentDidMount() {
@@ -92,13 +94,14 @@ export default class PeriodStats extends Component {
         })
       })
 
-      return this.setState({
-        games: finalList
-      })
+      this.setState({ games: finalList })
+      return this.setState({ loadingGames: false })
     })
   }
 
   getGameStats() {
+    this.setState({ loadingStats: true })
+    
     getGameStats(this.state.selectedGame).then(response => {
       const data = toJs(response)
       const homeData = data.InGameStatisticsPerPeriod.periodStats.GameTotal.Team[0]
@@ -108,7 +111,7 @@ export default class PeriodStats extends Component {
       const games = this.state.games
       const gameInfo = games.find(game => game.ID === this.state.selectedGame)
 
-      return this.setState({
+      this.setState({
         home: {
           ...home,
           name: gameInfo.home,
@@ -129,7 +132,8 @@ export default class PeriodStats extends Component {
         }
       })
 
-    });
+      return this.setState({ loadingStats: false })
+    })
   }
   
   render() {
@@ -137,6 +141,8 @@ export default class PeriodStats extends Component {
       period,
       home,
       away,
+      loadingGames,
+      loadingStats,
     } = this.state
 
     return(
@@ -147,22 +153,36 @@ export default class PeriodStats extends Component {
           <Col col={6}>
             <Row>
               <Col>
-                <Label>Vælg kamp</Label>
-                <SelectorContainer>
-                  <DateSelector onChange={e => this.setState({selectedGame: e.target.value})}>
-                    <option value={0} key={0}>---</option>
-                    {this.state.games.map(game => {
-                      return(
-                        <option value={game.ID} key={game.ID}>
-                          {new Date(game.date).toLocaleDateString()}, {game.home} - {game.away}
-                        </option>
-                      )
-                    })}
-                  </DateSelector>
-                  <button onClick={e => this.getGameStats()}>Hent stats</button>
-                </SelectorContainer>
+                {loadingGames ? (
+                  <Label>Henter kampe...</Label>
+                ) : (
+                  <div>
+                    <Label>Vælg kamp</Label>
+                    <SelectorContainer>
+                      <DateSelector onChange={e => this.setState({selectedGame: e.target.value})}>
+                        <option value={0} key={0}>---</option>
+                        {this.state.games.map(game => {
+                          return(
+                            <option value={game.ID} key={game.ID}>
+                              {new Date(game.date).toLocaleDateString()}, {game.home} - {game.away}
+                            </option>
+                          )
+                        })}
+                      </DateSelector>
+                      <button onClick={e => this.getGameStats()}>Hent stats</button>
+                    </SelectorContainer>
+                  </div>
+                )}
               </Col>
             </Row>
+
+            {loadingStats &&
+              <Row>
+                <Col>
+                  <Label>Henter stats...</Label>
+                </Col>
+              </Row>
+            }
 
             <Separator />
 
