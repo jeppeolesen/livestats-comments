@@ -152,7 +152,7 @@ export default class Output extends Component {
             </div>
           ` : `
             <div style="width:100%">
-              <h2 style="text-align:center;">Spillerprofil: #${number} ${name}</h2>
+              <h2 style="text-align:center;">${title}: #${number} ${name}</h2>
               <div style="text-align: center">
                 <img src=${image}" style="max-width: 100%; display: block; margin: 0 auto;" />
                 <p style="font-size: 11px; font-style: italic">Kilde: ${source}</p>
