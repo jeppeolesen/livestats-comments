@@ -126,8 +126,8 @@ export default class Output extends Component {
                 <div style="flex: 1; text-align: center;">
                   <div style="padding: 1em; background: #f5f5f5;">${dob}</div>
                   <div style="padding: 1em;">${shoots}</div>
-                  <div style="padding: 1em; background: #f5f5f5;">${height}</div>
-                  <div style="padding: 1em;">${weight}</div>
+                  <div style="padding: 1em; background: #f5f5f5;">${height} cm</div>
+                  <div style="padding: 1em;">${weight} kg</div>
                   <div style="padding: 1em; background: #f5f5f5;">${gp}</div>
                   <div style="padding: 1em;">${g}</div>
                   <div style="padding: 1em; background: #f5f5f5;">${a}</div>
@@ -174,8 +174,8 @@ export default class Output extends Component {
                 <div style="flex: 1; text-align: center;">
                   <div style="padding: 1em; background: #f5f5f5;">${dob}</div>
                   <div style="padding: 1em;">${shoots}</div>
-                  <div style="padding: 1em; background: #f5f5f5;">${height}</div>
-                  <div style="padding: 1em;">${weight}</div>
+                  <div style="padding: 1em; background: #f5f5f5;">${height} cm</div>
+                  <div style="padding: 1em;">${weight} kg</div>
                   <div style="padding: 1em; background: #f5f5f5;">${gpi}</div>
                   <div style="padding: 1em;">${mip}</div>
                   <div style="padding: 1em; background: #f5f5f5;">${sv}</div>
