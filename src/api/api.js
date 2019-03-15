@@ -1,5 +1,5 @@
 export const getGamesList = () => {
-  return fetch('https://cors-anywhere.herokuapp.com/http://hockeyligaen.dk/interface/xmlGameListTournament.aspx?tournamentID=1567')
+  return fetch('https://cors-anywhere.herokuapp.com/http://hockeyligaen.dk/interface/xmlGameListTournament.aspx?tournamentID=1566')
     .then(response => {
       return response.text()
     })
